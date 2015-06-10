@@ -1,0 +1,85 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<dom-module id='my-list'>
+  <style>
+    :host {
+      display: block;
+    }
+    paper-item {
+      border-bottom: 1px solid #CCC;
+    }
+    paper-icon-button {
+      margin-right: 30px;
+    }
+    b {
+      font-size: 20px;
+    }
+    paper-progress {
+      width: 100%;
+      top: -15px;
+      position: relative;
+      height: 4px;
+    }
+  </style>
+  <template>
+    <div class="list">
+      <template is="dom-repeat" items="{{items}}">
+        <paper-item>
+          <paper-spinner active="{{item.loading}}"></paper-spinner>
+          <paper-icon-button role="listitem" icon="clear" on-click="remove" item-icon></paper-icon-button>
+          <paper-item-body two-line>
+            <div>
+              <b>{{item.name}}</b>
+            </div>
+            <div>
+              <sound-player src="{{item.src}}" progress="{{item.progress}}" loaded="{{item.loaded}}" loading="{{item.loading}}"></sound-player>
+            </div>
+          </paper-item-body>
+        </paper-item>
+        <paper-progress value="{{item.progress}}" hidden$="{{item.loaded}}"></paper-progress>
+      </template>
+    </div>
+  </template>
+
+</dom-module>
+  <script>
+    (function() {
+      Polymer({
+        is: 'my-list',
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+          }
+        },
+        ready: function(){
+          this.items = [];
+        },
+        remove: function(e) {
+          var id = e.model.__data__.item.id;
+          this.items = this.items.filter(function(el) {
+            return el.id !== id;
+          });
+        },
+        add: function(id) {
+          var sound = document.getElementById('app').data.sounds[id];
+          sound.loading = true;
+          sound.loaded = false;
+
+          this.items = this.items.concat(sound);
+
+          var toastr = document.getElementById('sound-added');
+          toastr.setAttribute('text', 'Sound ' + sound.name + ' added!');
+          toastr.show();
+        }
+      });
+    })();
+  </script>

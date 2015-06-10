@@ -1,0 +1,12 @@
+{
+  "sounds": {
+    "meadow-ambience": {
+      "src": "meadow-ambience.wav",
+      "name": "Meadow Ambience"
+    },
+    "aspen-tree-in-strong-wind": {
+      "src": "aspen-tree-in-strong-wind.wav",
+      "name": "Aspen Tree"
+    }
+  }
+}

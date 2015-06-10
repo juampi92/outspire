@@ -1,0 +1,49 @@
+<dom-module id='browse-list'>
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+  <template>
+    <ul>
+      <template is="dom-repeat" items="{{items}}">
+        <li>
+          <b>{{item.name}}</b>
+          <paper-icon-button icon="add" on-click="add"></paper-icon-button>
+        </li>
+      </template>
+    </ul>
+  </template>
+
+</dom-module>
+  <script>
+    (function() {
+      Polymer({
+        is: 'browse-list',
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+          }
+        },
+        ready: function() {
+          this.load();
+        },
+        load: function() {
+          var items = [],
+            sounds = document.getElementById('app').data.sounds;
+
+          for (var key in sounds) {
+            items.push(sounds[key]);
+            sounds[key].id = key;
+          }
+
+          this.items = items;
+        },
+        add: function(e) {
+          var id = e.model.__data__.item.id;
+          document.getElementById('my-list').add(id);
+        }
+      });
+    })();
+  </script>
