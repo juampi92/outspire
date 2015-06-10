@@ -2,6 +2,7 @@ node_modules
 dist
 test/temp
 bower_components
+.bowerrc
 .tmp
 test/bower_components/
 app/sound-assets/

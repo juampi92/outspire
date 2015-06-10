@@ -17,18 +17,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.data = {
     'sounds': {
-      /*'meadow-ambience': {
+      'meadow-ambience': {
         src: './sound-assets/meadow-ambience.wav',
         name: 'Meadow Ambience'
       },
       'aspen-tree-in-strong-wind': {
         src: './sound-assets/aspen-tree-in-strong-wind.wav',
         name: 'Aspen Tree'
-      },*/
-      'rain-thunder': {
-        src: 'http://www.freesound.org/people/reinsamba/sounds/17084/download/17084__reinsamba__rain-and-final-thunder-clap.mp3',
-        name: 'Rain Thunder'
       },
+      'rain-thunder': {
+        src: './sound-assets/rain-and-final-thunder.mp3', // http://www.freesound.org/people/reinsamba/sounds/17084/download/17084__reinsamba__rain-and-final-thunder-clap.mp3
+        name: 'Rain Thunder'
+      }/*,
       'rain': {
         src: 'http://www.freesound.org/people/RHumphries/sounds/2519/download/2519__rhumphries__rbh-rain-01.wav',
         name: 'Rain'
@@ -36,9 +36,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'nightingale': {
         src: 'http://www.freesound.org/people/reinsamba/sounds/17185/download/17185__reinsamba__nightingale-song-3.wav',
         name: 'Nightingale'
-      },
+      },*/
 
     }
+  };
+
+  app.trigger = function(name, properties){
+    this.dispatchEvent(new CustomEvent(name, {detail: properties}));
   };
 
   app.displayInstalledToast = function() {

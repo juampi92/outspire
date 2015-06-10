@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<dom-module id='my-list'>
+<dom-module id='sound-list'>
   <style>
     :host {
       display: block;
@@ -40,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <b>{{item.name}}</b>
             </div>
             <div>
-              <sound-player src="{{item.src}}" progress="{{item.progress}}" loaded="{{item.loaded}}" loading="{{item.loading}}"></sound-player>
+              <sound-player src="{{item.src}}" progress="{{item.progress}}" loaded="{{item.loaded}}" loading="{{item.loading}}" volume="{{item.volume}}" muted="{{item.muted}}"></sound-player>
             </div>
           </paper-item-body>
         </paper-item>
@@ -52,13 +52,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </dom-module>
   <script>
     (function() {
+      var app = document.getElementById('app');
+
       Polymer({
-        is: 'my-list',
+        is: 'sound-list',
         properties: {
           items: {
             type: Array,
             notify: true,
           }
+        },
+        fromJSON: function(json){
+          for (var i = 0, cursor; i < json.length; i++) {
+            cursor = json[i];
+            this.add(cursor.id, cursor);
+          }
+        },
+        toJSON: function(){
+          return this.items.filter(function(el) {
+            return {
+              id: el.id,
+              volume: el.volume,
+              muted: el.muted
+            };
+          });
         },
         ready: function(){
           this.items = [];
@@ -69,16 +86,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             return el.id !== id;
           });
         },
-        add: function(id) {
-          var sound = document.getElementById('app').data.sounds[id];
-          sound.loading = true;
-          sound.loaded = false;
+        add: function(id, options) {
+          var base = app.data.sounds[id],
+            sound = {
+              id: id,
+              src: base.src,
+              volume: options.volume || 10,
+              muted: options.muted || false,
+              loading: true,
+              loaded: false
+            };
 
           this.items = this.items.concat(sound);
-
-          var toastr = document.getElementById('sound-added');
-          toastr.setAttribute('text', 'Sound ' + sound.name + ' added!');
-          toastr.show();
         }
       });
     })();

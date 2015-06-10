@@ -24,8 +24,6 @@
 </dom-module>
   <script>
     (function() {
-      var app = document.getElementById('app');
-
       Polymer({
         is: 'sound-player',
         properties: {
@@ -106,8 +104,7 @@
             this.loaded = false;
           }
         },
-        _trackPlaying: function(evnt, e){
-          console.log(evnt, e.target.readyState)
+        _trackPlaying: function() {
           if (this._audioElement.readyState < 3) {
             this.loading = true;
           } else {

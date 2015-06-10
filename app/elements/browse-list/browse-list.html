@@ -18,6 +18,8 @@
 </dom-module>
   <script>
     (function() {
+      var app = document.getElementById('app');
+
       Polymer({
         is: 'browse-list',
         properties: {
@@ -42,7 +44,7 @@
         },
         add: function(e) {
           var id = e.model.__data__.item.id;
-          document.getElementById('my-list').add(id);
+          app.trigger('song-add', id);
         }
       });
     })();
