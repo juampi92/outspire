@@ -5,8 +5,8 @@
     }
   </style>
   <template>
-    <paper-toast id="toastr-sound-added" duration="4000" _text="Sound {name} added"></paper-toast>
-    <paper-toast id="toastr-error" duration="5000" _text="Error: {message}!"></paper-toast>
+    <paper-toast id="toastr-sound-added" duration="4000" _text="Sound {{name}} added"></paper-toast>
+    <paper-toast id="toastr-error" duration="5000" _text="Error: {{message}}!"></paper-toast>
   </template>
 
 </dom-module>
@@ -27,7 +27,7 @@
         },
         subscribe: function(){
           app.addEventListener('error', this._showToastr.bind(this));
-          app.addEventListener('sound-added', this._showToastr.bind(this));
+          app.addEventListener('sound:added', this._showToastr.bind(this));
           /*
           app.addEventListener('sound-added', this._showToastr.bind(this));
           app.addEventListener('sound-added', this._showToastr.bind(this));
@@ -44,7 +44,7 @@
         _parseMessage: function(toastr, options) {
           var msg = toastr.getAttribute('_text');
           for (var key in options) {
-            msg = msg.replace('{' + key + '}', options[key], 'g');
+            msg = msg.replace('{{' + key + '}}', options[key], 'g');
           }
           toastr.setAttribute('text', msg);
         }

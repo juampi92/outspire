@@ -7,15 +7,15 @@
         is: 'storage-manager',
         properties: {},
         ready: function() {
-          app.addEventListener('storage-fetch-all', function(e) {
+          app.addEventListener('storage:fetch:all', function(e) {
 
           }.bind(this));
 
-          app.addEventListener('storage-fetch-current', function(e) {
+          app.addEventListener('storage:fetch:current', function(e) {
             this.fetchById(e.detail);
           }.bind(this));
 
-          app.addEventListener('storage-fetch-id', function(e) {
+          app.addEventListener('storage:fetch:id', function(e) {
 
           }.bind(this));
 
@@ -24,16 +24,16 @@
           var result;
           // Maybe they are cached
 
-          app.trigger('storage-fetched-id:' + id, result);
+          app.trigger('storage:fetched:id:' + id, result);
           if (isCurrent) {
-            app.trigger('storage-fetched-current', result);
+            app.trigger('storage:fetched:current', result);
           }
         },
         fetchAll: function(){
           var result;
           // If cached
 
-          app.trigger('storage-fetched-all', result);
+          app.trigger('storage:fetched:all', result);
         }
       });
     })();

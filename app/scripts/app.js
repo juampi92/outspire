@@ -50,6 +50,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
     console.log('Our app is ready to rock!');
+    var isMobile = false;
+
+
+    this.setAttribute('mainMode', isMobile ? 'seamed' : 'cover');
+    this.setAttribute('drawerWidth', isMobile ? '100%' : '320px');
+    this.setAttribute('toolbarClass', isMobile ? '' : 'tall');
   });
 
   // See https://github.com/Polymer/polymer/issues/1381
@@ -57,17 +63,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     document.querySelector('body').removeAttribute('unresolved');
 
     // Ensure the drawer is hidden on desktop/tablet
-    var drawerPanel = document.querySelector('#paperDrawerPanel');
-    drawerPanel.forceNarrow = true;
+    /*ar drawerPanel = document.querySelector('#paperDrawerPanel');
+    drawerPanel.forceNarrow = true;*/
   });
 
   // Close drawer after menu item is selected if drawerPanel is narrow
-  app.onMenuSelect = function() {
+  /*app.onMenuSelect = function() {
     var drawerPanel = document.querySelector('#paperDrawerPanel');
     if (drawerPanel.narrow) {
       drawerPanel.closeDrawer();
     }
-  };
+  };*/
 
 })(document);
 

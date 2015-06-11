@@ -76,9 +76,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             value: false
           }
         },
-        fromJSON: function(json){
+        fromJSON: function(json) {
           this.name = json.name;
-          this.setAttribute('list-id', json["list-id"]);
+          this.setAttribute('list-id', json['list-id']);
 
           for (var i = 0, cursor; i < json.items.length; i++) {
             cursor = json.items[i];
@@ -87,7 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           this.saved = true;
         },
-        toJSON: function(){
+        toJSON: function() {
           return {
             'list-id': this['list-id'],
             name: this.name,
@@ -100,9 +100,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             })
           };
         },
-        ready: function(){
+        ready: function() {
           if (this.getAttribute('list-id')) {
             // subscribe to storage if it's a real list
+          } else {
+            this.items = [];
           }
         },
         remove: function(e) {

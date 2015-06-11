@@ -75,9 +75,9 @@
           this._audioElement.addEventListener('canplay', this._audioElement.play.bind(this._audioElement));
           this._audioElement.addEventListener('waiting', this._trackPlaying.bind(this,'waiting'));
           this._audioElement.addEventListener('stalled', this._trackPlaying.bind(this,'stalled'));
-          
+
           this._audioElement.addEventListener('error', function(e) {
-            console.log('Audio error', e)
+            console.log('Audio error', e);
             app.trigger('error', e.detail);
           });
         },

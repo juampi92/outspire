@@ -15,8 +15,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta charset="utf-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Polymer Starter Kit" />
-  <title>Polymer Starter Kit</title>
+  <meta name="generator" content="outspire" />
+  <title>outspire</title>
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
   <!-- Chrome for Android theme color -->
@@ -30,13 +30,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="Polymer Starter Kit">
+  <meta name="application-name" content="outspire">
   <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
+  <meta name="apple-mobile-web-app-title" content="outspire">
   <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
 
   <!-- Tile icon for Win8 (144x144) -->
@@ -55,81 +55,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- endreplace-->
 </head>
 
-<body unresolved class="fullbleed layout vertical">
+<body>
   <template is="dom-bind" id="app">
 
-    <paper-drawer-panel id="paperDrawerPanel" forceNarrow>
-      <div drawer>
+    <paper-drawer-panel id="drawerPanel" responsive-width="1024px" drawer-width="320px">
 
-        <!-- Drawer Toolbar -->
-        <paper-toolbar id="drawerToolbar">
-          <span>Menu</span>
-        </paper-toolbar>
+      <paper-header-panel class="list-panel" drawer mode="seamed">
 
-        <!-- Drawer Content -->
-          <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
-              <a data-route="home" href="/">
-                <iron-icon icon="home"></iron-icon>
-                <span>Home</span>
-              </a>
+        <!-- List Toolbar -->
+        <paper-toolbar class="tall"></paper-toolbar>
 
-              <a data-route="my-sounds" href="/my-sounds">
-                <iron-icon icon="info"></iron-icon>
-                <span>My Sounds</span>
-              </a>
-          </paper-menu>
-      </div>
-      <paper-header-panel main mode="waterfall-tall">
+        <!-- List -->
+        <paper-menu class="list">
+          <browse-list id="browse-list"></browse-list>
+        </paper-menu>
+
+      </paper-header-panel>
+
+      <paper-header-panel class="main-panel" main mode="cover">
+
         <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar">
-          <button tabindex="1" id="paperToggle" paper-drawer-toggle>
-            <iron-icon icon="menu" paper-drawer-toggle></iron-icon>
-          </button>
-          <span class="flex"></span>
-
-          <!-- Toolbar icons -->
-          <paper-icon-button icon="refresh"></paper-icon-button>
-          <paper-icon-button icon="search"></paper-icon-button>
-          <div class="middle"></div>
-
-          <!-- Application name -->
-          <div class="appname bottom paper-font-display2">Sounds of Nature</div>
-
+        <paper-toolbar class="tall">
+          <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
         </paper-toolbar>
 
-        <!-- Main Content -->
-          <iron-pages attr-for-selected="data-route" selected="{{route}}">
+        <div class="content">
 
-            <section data-route="home">
+          <paper-material>
+            <div class="appname bottom paper-font-display2">outspire</div>
+
+            <iron-pages attr-for-selected="data-route" selected="{{route}}">
+              <section data-route="home">
               <paper-material elevation="1">
                 <h3 class="paper-font-display1">Current Mix</h3>
                 <current-soundlist></current-soundlist>
               </paper-material>
-              <paper-material elevation="1">
-                <h3 class="paper-font-display1">Browse</h3>
-                <browse-list id="browse-list"></browse-list>
-              </paper-material>
             </section>
+            </iron-pages>
 
-            <section data-route="my-sounds">
-              <paper-material elevation="1">
-                <h3 class="paper-font-display1">My Sounds</h3>
-                <p>This is the users section</p>
-                <a href="/users/Rob">Rob</a>
-              </paper-material>
-            </section>
+          </paper-material>
 
-            <section data-route="my-sound">
-              <paper-material elevation="1">
-                <h3 class="paper-font-display1">
-                Sound <span>{{params.name}}</span>
-                </h3>
-                <div>This is <span>{{params.name}}</span>'s section</div>
-              </paper-material>
-            </section>
+        </div>
 
-          </iron-pages>
-        </paper-header-panel>
+      </paper-header-panel>
+
     </paper-drawer-panel>
 
     <toastr-manager></toastr-manager>

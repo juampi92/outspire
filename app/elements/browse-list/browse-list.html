@@ -5,14 +5,12 @@
     }
   </style>
   <template>
-    <ul>
-      <template is="dom-repeat" items="{{items}}">
-        <li>
-          <b>{{item.name}}</b>
-          <paper-icon-button icon="add" on-click="add"></paper-icon-button>
-        </li>
-      </template>
-    </ul>
+    <template is="dom-repeat" items="{{items}}">
+      <paper-item>
+        <b>{{item.name}}</b>
+        <paper-icon-button icon="add" on-click="add"></paper-icon-button>
+      </paper-item>
+    </template>
   </template>
 
 </dom-module>
