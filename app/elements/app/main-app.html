@@ -1,0 +1,78 @@
+<dom-module id="main-app">
+
+  <link rel="import" type="css" href="main-app.css">
+
+  <template>
+    <paper-drawer-panel id="drawerPanel" responsive-width="1024px" drawer-width="{{drawerWidth}}">
+      <paper-header-panel class="list-panel" drawer mode="seamed">
+        <!-- List Toolbar -->
+        <paper-toolbar class$="{{toolbarClass}}"></paper-toolbar>
+        <!-- List -->
+        <browse-list class="list" on-iron-activate="_listTap"></browse-list>
+      </paper-header-panel>
+
+      <paper-header-panel class="main-panel" main mode="{{mainMode}}">
+        <!-- Main Toolbar -->
+        <paper-toolbar class$="{{toolbarClass}}">
+          <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+        </paper-toolbar>
+
+        <div class="content">
+          <paper-material>
+            <!-- Card Content -->
+            <current-soundlist></current-soundlist>
+          </paper-material>
+        </div>
+      </paper-header-panel>
+    </paper-drawer-panel>
+    <iron-media-query query="(max-width: 780px)" query-matches="{{_isMobile}}"></iron-media-query>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'main-app',
+      properties: {
+        _isMobile: {
+          type: Boolean,
+          observer: '_isMobileChanged'
+        }
+      },
+      _listTap: function() {
+        this.$.drawerPanel.closeDrawer();
+      },
+      _isMobileChanged: function(isMobile) {
+        this.mainMode = isMobile ? 'seamed' : 'cover';
+        this.drawerWidth = isMobile ? '100%' : '320px';
+        this.toolbarClass = isMobile ? '' : 'tall';
+        this.updateStyles();
+      },
+      data: {
+        'sounds': {
+          'meadow-ambience': {
+            src: './sound-assets/meadow-ambience.wav',
+            name: 'Meadow Ambience'
+          },
+          'aspen-tree-in-strong-wind': {
+            src: './sound-assets/aspen-tree-in-strong-wind.wav',
+            name: 'Aspen Tree'
+          },
+          'rain-thunder': {
+            src: './sound-assets/rain-and-final-thunder.mp3', // http://www.freesound.org/people/reinsamba/sounds/17084/download/17084__reinsamba__rain-and-final-thunder-clap.mp3
+            name: 'Rain Thunder'
+          }
+          /*,
+          'rain': {
+            src: 'http://www.freesound.org/people/RHumphries/sounds/2519/download/2519__rhumphries__rbh-rain-01.wav',
+            name: 'Rain'
+          },
+          'nightingale': {
+            src: 'http://www.freesound.org/people/reinsamba/sounds/17185/download/17185__reinsamba__nightingale-song-3.wav',
+            name: 'Nightingale'
+          },*/
+
+        }
+      }
+    });
+  </script>
+
+</dom-module>

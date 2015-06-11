@@ -5,12 +5,14 @@
     }
   </style>
   <template>
+    <paper-menu class="list">
     <template is="dom-repeat" items="{{items}}">
       <paper-item>
         <b>{{item.name}}</b>
         <paper-icon-button icon="add" on-click="add"></paper-icon-button>
       </paper-item>
     </template>
+    </paper-menu>
   </template>
 
 </dom-module>
@@ -42,7 +44,7 @@
         },
         add: function(e) {
           var id = e.model.__data__.item.id;
-          app.trigger('sound:add', id);
+          app.fire('sound:add', id);
         }
       });
     })();

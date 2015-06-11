@@ -30,9 +30,9 @@
             }
 
             if (e.detail) {
-              app.trigger('storage:fetch-current', e.datail);
+              app.fire('storage:fetch-current', e.datail);
             } else {
-              app.trigger('current:changed', {
+              app.fire('current:changed', {
                 name: '',
                 'list-id': '',
                 items: []
@@ -47,7 +47,7 @@
 
           app.addEventListener('sound:add', function(e) {
             var sound = this.current.add(e.detail);
-            app.trigger('sound:added', sound);
+            app.fire('sound:added', sound);
           }.bind(this));
 
         }

@@ -56,56 +56,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </head>
 
 <body>
-  <template is="dom-bind" id="app">
-
-    <paper-drawer-panel id="drawerPanel" responsive-width="1024px" drawer-width="320px">
-
-      <paper-header-panel class="list-panel" drawer mode="seamed">
-
-        <!-- List Toolbar -->
-        <paper-toolbar class="tall"></paper-toolbar>
-
-        <!-- List -->
-        <paper-menu class="list">
-          <browse-list id="browse-list"></browse-list>
-        </paper-menu>
-
-      </paper-header-panel>
-
-      <paper-header-panel class="main-panel" main mode="cover">
-
-        <!-- Main Toolbar -->
-        <paper-toolbar class="tall">
-          <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-        </paper-toolbar>
-
-        <div class="content">
-
-          <paper-material>
-            <div class="appname bottom paper-font-display2">outspire</div>
-
-            <iron-pages attr-for-selected="data-route" selected="{{route}}">
-              <section data-route="home">
-              <paper-material elevation="1">
-                <h3 class="paper-font-display1">Current Mix</h3>
-                <current-soundlist></current-soundlist>
-              </paper-material>
-            </section>
-            </iron-pages>
-
-          </paper-material>
-
-        </div>
-
-      </paper-header-panel>
-
-    </paper-drawer-panel>
-
-    <toastr-manager></toastr-manager>
-  </template>
+  <main-app id="app"></main-app>
 
   <!-- build:js scripts/app.js -->
-  <script src="scripts/app.js"></script>
+  <!-- <script src="scripts/app.js"></script>-->
   <!-- endbuild-->
 </body>
 

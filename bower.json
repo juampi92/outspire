@@ -10,7 +10,8 @@
     "page": "visionmedia/page.js#~1.6.3",
     "paper-slider": "PolymerElements/paper-slider#^1.0.0",
     "paper-spinner": "PolymerElements/paper-spinner#^1.0.0",
-    "iron-media-query": "PolymerElements/iron-media-query#^1.0.0"
+    "iron-media-query": "PolymerElements/iron-media-query#^1.0.0",
+    "paper-tabs": "PolymerElements/paper-tabs#^1.0.0"
   },
   "devDependencies": {
     "web-component-tester": "*",

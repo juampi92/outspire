@@ -78,7 +78,7 @@
 
           this._audioElement.addEventListener('error', function(e) {
             console.log('Audio error', e);
-            app.trigger('error', e.detail);
+            app.fire('error', e.detail);
           });
         },
         toggleMute: function() {

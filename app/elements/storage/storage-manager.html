@@ -24,16 +24,16 @@
           var result;
           // Maybe they are cached
 
-          app.trigger('storage:fetched:id:' + id, result);
+          app.fire('storage:fetched:id:' + id, result);
           if (isCurrent) {
-            app.trigger('storage:fetched:current', result);
+            app.fire('storage:fetched:current', result);
           }
         },
         fetchAll: function(){
           var result;
           // If cached
 
-          app.trigger('storage:fetched:all', result);
+          app.fire('storage:fetched:all', result);
         }
       });
     })();
