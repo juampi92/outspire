@@ -30,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   </style>
   <template>
+
     <div class="list">
       <template is="dom-repeat" items="{{items}}">
         <paper-item>
@@ -44,7 +45,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
           </paper-item-body>
         </paper-item>
-        <paper-progress value="{{item.progress}}" hidden$="{{item.loaded}}"></paper-progress>
+        <paper-progress value="{{item.progress}}" hidden="{{item.loaded}}"></paper-progress>
       </template>
     </div>
   </template>
@@ -57,28 +58,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer({
         is: 'sound-list',
         properties: {
+          name: {
+            type: String,
+            notify: true
+          },
+          'list-id': {
+            type: Number,
+            readOnly: true
+          },
           items: {
             type: Array,
             notify: true,
+          },
+          saved: {
+            type: Boolean,
+            notify: true,
+            value: false
           }
         },
         fromJSON: function(json){
-          for (var i = 0, cursor; i < json.length; i++) {
-            cursor = json[i];
+          this.name = json.name;
+          this.setAttribute('list-id', json["list-id"]);
+
+          for (var i = 0, cursor; i < json.items.length; i++) {
+            cursor = json.items[i];
             this.add(cursor.id, cursor);
           }
+
+          this.saved = true;
         },
         toJSON: function(){
-          return this.items.filter(function(el) {
-            return {
-              id: el.id,
-              volume: el.volume,
-              muted: el.muted
-            };
-          });
+          return {
+            'list-id': this['list-id'],
+            name: this.name,
+            items: this.items.map(function(el) {
+              return {
+                id: el.id,
+                volume: el.volume,
+                muted: el.muted
+              };
+            })
+          };
         },
         ready: function(){
-          this.items = [];
+          if (this.getAttribute('list-id')) {
+            // subscribe to storage if it's a real list
+          }
         },
         remove: function(e) {
           var id = e.model.__data__.item.id;
@@ -87,9 +112,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           });
         },
         add: function(id, options) {
+          options = options || {};
           var base = app.data.sounds[id],
             sound = {
               id: id,
+              name: base.name,
               src: base.src,
               volume: options.volume || 10,
               muted: options.muted || false,
@@ -98,6 +125,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             };
 
           this.items = this.items.concat(sound);
+          return sound;
         }
       });
     })();

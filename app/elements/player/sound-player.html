@@ -73,10 +73,13 @@
           this._audioElement.addEventListener('progress', this._trackProgress.bind(this));
           this._audioElement.addEventListener('playing', this._trackPlaying.bind(this,'playing'));
           this._audioElement.addEventListener('canplay', this._audioElement.play.bind(this._audioElement));
-          //this._audioElement.addEventListener('error', this._trackPlaying.bind(this,'error'));
           this._audioElement.addEventListener('waiting', this._trackPlaying.bind(this,'waiting'));
           this._audioElement.addEventListener('stalled', this._trackPlaying.bind(this,'stalled'));
-          console.log(this._audioElement);
+          
+          this._audioElement.addEventListener('error', function(e) {
+            console.log('Audio error', e)
+            app.trigger('error', e.detail);
+          });
         },
         toggleMute: function() {
           if (!this.muted) {
@@ -94,14 +97,16 @@
            duration = this._audioElement.duration,
            progress = 0;
 
+          // Detect progress %
           if (duration > 0) {
             progress = Math.floor((bufferedEnd / duration) * 100);
             this.progress = progress;
           }
 
+          // Fully loaded!
           if (progress === 100) {
             this.loading = false;
-            this.loaded = false;
+            this.loaded = true;
           }
         },
         _trackPlaying: function() {

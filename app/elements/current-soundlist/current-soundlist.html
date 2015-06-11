@@ -1,3 +1,5 @@
+<link rel="import" href="../sound-list/sound-list.html">
+
 <dom-module id='current-soundlist'>
   <style>
     :host {
@@ -5,7 +7,7 @@
     }
   </style>
   <template>
-
+    <sound-list></sound-list>
   </template>
 
 </dom-module>
@@ -17,8 +19,36 @@
         is: 'current-soundlist',
         properties: {},
         ready: function() {
+          this.current = this.$$('sound-list');
 
+          // If user wants to change current soundlist
+          app.addEventListener('current:change', function(e) {
+            // If there are unsaved changes
+            if (!this.current.getAttribute('saved')) {
+              e.preventDefault();
+              return;
+            }
 
+            if (e.detail) {
+              app.trigger('storage:fetch-current', e.datail);
+            } else {
+              app.trigger('current:changed', {
+                name: '',
+                'list-id': '',
+                items: []
+              });
+            }
+
+          }.bind(this));
+
+          app.addEventListener('current:changed', function(e){
+            this.current.fromJSON(e.detail);
+          }.bind(this));
+
+          app.addEventListener('sound:add', function(e) {
+            var sound = this.current.add(e.detail);
+            app.trigger('sound:added', sound);
+          }.bind(this));
 
         }
       });

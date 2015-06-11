@@ -41,12 +41,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   };
 
+  // Mediator
   app.trigger = function(name, properties){
     this.dispatchEvent(new CustomEvent(name, {detail: properties}));
-  };
-
-  app.displayInstalledToast = function() {
-    document.querySelector('#caching-complete').show();
   };
 
   // Listen for template bound event to know when bindings

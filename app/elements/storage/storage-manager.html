@@ -1,0 +1,40 @@
+<dom-module id='storage-manager'></dom-module>
+  <script>
+    (function() {
+      var app = document.getElementById('app');
+
+      Polymer({
+        is: 'storage-manager',
+        properties: {},
+        ready: function() {
+          app.addEventListener('storage-fetch-all', function(e) {
+
+          }.bind(this));
+
+          app.addEventListener('storage-fetch-current', function(e) {
+            this.fetchById(e.detail);
+          }.bind(this));
+
+          app.addEventListener('storage-fetch-id', function(e) {
+
+          }.bind(this));
+
+        },
+        fetchById: function(id, isCurrent) {
+          var result;
+          // Maybe they are cached
+
+          app.trigger('storage-fetched-id:' + id, result);
+          if (isCurrent) {
+            app.trigger('storage-fetched-current', result);
+          }
+        },
+        fetchAll: function(){
+          var result;
+          // If cached
+
+          app.trigger('storage-fetched-all', result);
+        }
+      });
+    })();
+  </script>
