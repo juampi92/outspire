@@ -40,3 +40,13 @@ paper-material {
   max-width: 640px;
   margin: 64px auto;
 }
+
+paper-toolbar paper-item {
+  width: 100%;
+}
+
+#search {
+  width: 100%;
+  --paper-input-container-color: white;
+  --paper-input-container-focus-color: #EEE;
+}

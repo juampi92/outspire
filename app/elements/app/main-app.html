@@ -6,13 +6,18 @@
     <paper-drawer-panel id="drawerPanel" responsive-width="1024px" drawer-width="{{drawerWidth}}">
       <paper-header-panel class="list-panel" drawer mode="seamed">
         <!-- List Toolbar -->
-        <paper-toolbar class$="{{toolbarClass}}"></paper-toolbar>
+        <paper-toolbar class$="{{toolbarClass}}">
+          <paper-item>
+            <paper-input id="search" label="Search" value="{{filter::input}}"></paper-input>
+          </paper-item>
+        </paper-toolbar>
         <!-- List -->
-        <browse-list class="list" on-iron-activate="_listTap"></browse-list>
+        <browse-list on-iron-activate="_listTap" filter="{{filter}}"></browse-list>
       </paper-header-panel>
 
       <paper-header-panel class="main-panel" main mode="{{mainMode}}">
         <!-- Main Toolbar -->
+
         <paper-toolbar class$="{{toolbarClass}}">
           <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
         </paper-toolbar>
@@ -20,12 +25,17 @@
         <div class="content">
           <paper-material>
             <!-- Card Content -->
-            <current-soundlist></current-soundlist>
+            <current-sound-list></current-sound-list>
+
+            <!-- <h2>My Sounds</h2> -->
+            <list-sound-list></list-sound-list>
           </paper-material>
         </div>
       </paper-header-panel>
     </paper-drawer-panel>
+
     <iron-media-query query="(max-width: 780px)" query-matches="{{_isMobile}}"></iron-media-query>
+    <toastr-manager></toastr-manager>
   </template>
 
   <script>
@@ -59,7 +69,11 @@
           'rain-thunder': {
             src: './sound-assets/rain-and-final-thunder.mp3', // http://www.freesound.org/people/reinsamba/sounds/17084/download/17084__reinsamba__rain-and-final-thunder-clap.mp3
             name: 'Rain Thunder'
-          }
+          },
+          'invalid': {
+            src: './sound-assets/invalid.mp3',
+            name: 'Invalid File'
+          },
           /*,
           'rain': {
             src: 'http://www.freesound.org/people/RHumphries/sounds/2519/download/2519__rhumphries__rbh-rain-01.wav',

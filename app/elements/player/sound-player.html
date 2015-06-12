@@ -24,9 +24,16 @@
 </dom-module>
   <script>
     (function() {
+      var app = document.getElementById('app');
+
       Polymer({
         is: 'sound-player',
         properties: {
+          name: {
+            type: String,
+            notify: true,
+            value: ''
+          },
           src: {
             type: String,
             notify: true
@@ -66,6 +73,11 @@
             type: Number,
             value: 0,
             notify: true
+          },
+          error: {
+            type: Boolean,
+            value: false,
+            notify: true
           }
         },
         ready: function() {
@@ -77,9 +89,9 @@
           this._audioElement.addEventListener('stalled', this._trackPlaying.bind(this,'stalled'));
 
           this._audioElement.addEventListener('error', function(e) {
-            console.log('Audio error', e);
-            app.fire('error', e.detail);
-          });
+            this.error = true;
+            app.fire('error', 'Sound ' + this.name  + ' can\' load');
+          }.bind(this));
         },
         toggleMute: function() {
           if (!this.muted) {

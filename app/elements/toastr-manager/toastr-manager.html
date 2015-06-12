@@ -3,10 +3,14 @@
     paper-toast#toastr-error {
       background-color: #550000;
     }
+    paper-toast#toastr-warning {
+      background-color: #E44D00;
+    }
   </style>
   <template>
-    <paper-toast id="toastr-sound-added" duration="4000" _text="Sound {{name}} added"></paper-toast>
-    <paper-toast id="toastr-error" duration="5000" _text="Error: {{message}}!"></paper-toast>
+    <paper-toast id="toastr-sound-added" duration="4000" _text="Sound {name} added"></paper-toast>
+    <paper-toast id="toastr-warning" duration="4000" _text="{message}"></paper-toast>
+    <paper-toast id="toastr-error" duration="5000" _text="{message}!"></paper-toast>
   </template>
 
 </dom-module>
@@ -19,24 +23,29 @@
         properties: {},
         ready: function() {
           this.els = {
-            'sound-added': this.$$('#toastr-sound-added'),
-            'error': this.$$('#toastr-error')
+            'sound:added': this.$$('#toastr-sound-added'),
+            'error': this.$$('#toastr-error'),
+            'warning': this.$$('#toastr-warning')
           };
 
           this.subscribe();
         },
         subscribe: function(){
           app.addEventListener('error', this._showToastr.bind(this));
+          app.addEventListener('warning', this._showToastr.bind(this));
+
           app.addEventListener('sound:added', this._showToastr.bind(this));
-          /*
-          app.addEventListener('sound-added', this._showToastr.bind(this));
-          app.addEventListener('sound-added', this._showToastr.bind(this));
-          app.addEventListener('sound-added', this._showToastr.bind(this));
-          */
         },
         _showToastr: function(event) {
+          console.log(event.type, event.detail);
           var toastr = this.els[event.type],
            messages = event.detail;
+
+          if (typeof messages === "string") {
+            messages = {
+              message: messages
+            };
+          }
 
           this._parseMessage(toastr, messages);
           toastr.show();
@@ -44,7 +53,7 @@
         _parseMessage: function(toastr, options) {
           var msg = toastr.getAttribute('_text');
           for (var key in options) {
-            msg = msg.replace('{{' + key + '}}', options[key], 'g');
+            msg = msg.replace('{' + key + '}', options[key], 'g');
           }
           toastr.setAttribute('text', msg);
         }

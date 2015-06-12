@@ -1,6 +1,6 @@
-<link rel="import" href="../sound-list/sound-list.html">
+<link rel="import" href="sound-list.html">
 
-<dom-module id='current-soundlist'>
+<dom-module id='current-sound-list'>
   <style>
     :host {
       display: block;
@@ -16,7 +16,7 @@
       var app = document.getElementById('app');
 
       Polymer({
-        is: 'current-soundlist',
+        is: 'current-sound-list',
         properties: {},
         ready: function() {
           this.current = this.$$('sound-list');
@@ -41,13 +41,15 @@
 
           }.bind(this));
 
-          app.addEventListener('current:changed', function(e){
+          app.addEventListener('current:changed', function(e) {
             this.current.fromJSON(e.detail);
           }.bind(this));
 
           app.addEventListener('sound:add', function(e) {
             var sound = this.current.add(e.detail);
-            app.fire('sound:added', sound);
+            if (sound) {
+              app.fire('sound:added', sound);
+            }
           }.bind(this));
 
         }

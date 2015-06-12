@@ -3,6 +3,37 @@
     (function() {
       var app = document.getElementById('app');
 
+      var Storage = {
+        structure: {},
+        lastSave: null,
+        lastSync: null,
+
+        exists: function(name) {
+          return localStorage.getItem(name) != null;
+        },
+        save: function(name, content) {
+          localStorage.setItem(name, JSON.stringify(content));
+        },
+        load: function(name) {
+          return JSON.parse(localStorage.getItem(name));
+        },
+
+        loadAll: function() {
+          this.structure = {};
+          for (var i = 0, key; i < localStorage.length; i++) {
+            key = localStorage.key(i);
+            this.structure[key] = localStorage.getItem(key);
+          };
+        },
+        saveAll: function() {
+          this.structure = {};
+          for (var i = 0, key; i < localStorage.length; i++) {
+            key = localStorage.key(i);
+            this.structure[key] = localStorage.getItem(key);
+          };
+        },
+      };
+
       Polymer({
         is: 'storage-manager',
         properties: {},

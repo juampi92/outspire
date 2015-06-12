@@ -1,0 +1,76 @@
+<dom-module id='browse-list'>
+  <style>
+    :host {
+      display: block;
+      position: relative;
+    }
+  </style>
+  <template>
+    <paper-menu class="list">
+      <template is="dom-repeat" items="{{filteredItems}}">
+        <paper-item on-click="add">
+          <paper-icon-button icon="add"></paper-icon-button>
+          <b>{{item.name}}</b>
+        </paper-item>
+      </template>
+    </paper-menu>
+  </template>
+
+</dom-module>
+  <script>
+    (function() {
+      var app = document.getElementById('app');
+
+      Polymer({
+        is: 'browse-list',
+        properties: {
+          filter: {
+            type: String,
+            notify: true,
+            value: '',
+            observer: '_applyFilter'
+          },
+          filteredItems: {
+            type: Array,
+            notify: true,
+          }
+        },
+        ready: function() {
+          this.load();
+        },
+        load: function() {
+          var items = [],
+            sounds = document.getElementById('app').data.sounds;
+
+          for (var key in sounds) {
+            items.push(sounds[key]);
+            sounds[key].id = key;
+          }
+
+          this.items = items;
+          this.filteredItems = this.items;
+        },
+        add: function(e) {
+          // Get the selected ID
+          var id = e.model.__data__.item.id;
+          // Fire the add event
+          app.fire('sound:add', id);
+
+          // Retart filter
+          this.filter = '';
+        },
+        _applyFilter: function(filter){
+          if (!filter.trim().length) {
+            this.filteredItems = this.items;
+            return;
+          }
+
+          filter = filter.toLowerCase();
+
+          this.filteredItems = this.items.filter(function(i){
+            return (i.name.toLowerCase().indexOf(filter) >= 0);
+          });
+        }
+      });
+    })();
+  </script>
